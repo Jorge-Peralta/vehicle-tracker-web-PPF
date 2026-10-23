@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { formatDayLabel } from '../../../lib/dates'
 import type { DailyMovementSummary } from '../../../api/types'
+import { niceMax } from '../lib/chart-scale'
 import './ActivityChart.scss'
 
 const WIDTH = 640
@@ -16,14 +17,6 @@ const series = [
   { key: 'entries', label: 'Entradas', className: 'activity-chart__bar--entry' },
   { key: 'exits', label: 'Salidas', className: 'activity-chart__bar--exit' },
 ] as const
-
-/** Smallest "nice" axis maximum (1, 2, 5 × 10ⁿ steps, halved by the middle tick) above `value`. */
-function niceMax(value: number): number {
-  if (value <= 4) return 4
-  const magnitude = 10 ** Math.floor(Math.log10(value))
-  const step = [1, 2, 5, 10].find((factor) => factor * magnitude * 2 >= value)! * magnitude
-  return step * 2
-}
 
 /** Bar with rounded top corners and a square base sitting on the axis. */
 function barPath(x: number, y: number, width: number, height: number): string {
@@ -47,6 +40,12 @@ type ActivityChartProps = {
 /** Grouped bars of entries and exits per day, with a hover/focus tooltip and a table for screen readers. */
 export function ActivityChart({ data }: ActivityChartProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
+
+  // The API returns one item per day; guard anyway, an empty range would divide by zero.
+  if (data.length === 0) {
+    return <p className="activity-chart__empty">No hay datos de actividad.</p>
+  }
+
   const maxValue = niceMax(Math.max(...data.flatMap((day) => [day.entries, day.exits])))
   const ticks = [0, maxValue / 2, maxValue]
   const groupWidth = PLOT_WIDTH / data.length

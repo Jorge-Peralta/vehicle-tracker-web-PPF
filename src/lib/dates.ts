@@ -36,7 +36,7 @@ export function parseDateParam(value: string | null | undefined): Date | undefin
   return date.getMonth() === month - 1 ? date : undefined
 }
 
-const businessDayFormatter = new Intl.DateTimeFormat('en-CA', {
+const businessDayFormatter = new Intl.DateTimeFormat('en-US', {
   timeZone: BUSINESS_TIME_ZONE,
   year: 'numeric',
   month: '2-digit',
@@ -47,8 +47,12 @@ const MS_PER_DAY = 24 * 60 * 60 * 1000
 
 /** The last `count` Honduras calendar days as "YYYY-MM-DD", oldest first and ending today. */
 export function lastBusinessDays(count: number, now: Date = new Date()): string[] {
-  // en-CA formats as YYYY-MM-DD; reading it back as UTC midnight makes day steps exact.
-  const today = Date.parse(businessDayFormatter.format(now))
+  // Numeric parts, not the formatted string, so the result doesn't depend on a locale's layout.
+  // Taken as UTC midnight, so subtracting whole days is exact.
+  const parts = businessDayFormatter.formatToParts(now)
+  const part = (type: Intl.DateTimeFormatPartTypes) =>
+    Number(parts.find((entry) => entry.type === type)!.value)
+  const today = Date.UTC(part('year'), part('month') - 1, part('day'))
   return Array.from({ length: count }, (_, index) =>
     new Date(today - (count - 1 - index) * MS_PER_DAY).toISOString().slice(0, 10),
   )

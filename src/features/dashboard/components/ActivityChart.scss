@@ -3,6 +3,13 @@
 .activity-chart {
   margin: 0;
 
+  &__empty {
+    margin: 0;
+    padding: $spacing-unit * 8 0;
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
   &__legend {
     display: flex;
     gap: $spacing-unit * 4;

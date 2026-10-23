@@ -63,6 +63,19 @@
     font-variant-numeric: tabular-nums;
   }
 
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: $spacing-unit * 2;
+    min-height: 2.2rem;
+
+    p {
+      margin: 0;
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+  }
+
   &__hint {
     margin: 0;
     font-size: 0.8rem;

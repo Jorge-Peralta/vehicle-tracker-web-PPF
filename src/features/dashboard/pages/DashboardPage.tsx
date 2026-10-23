@@ -28,6 +28,11 @@ export function DashboardPage() {
 
   const today = activity.data?.at(-1)
   const weekTotal = activity.data?.reduce((sum, day) => sum + day.entries + day.exits, 0)
+  // The three activity tiles share one request, so they fail and retry together.
+  const activityErrorProps = {
+    isError: activity.isError && !activity.data,
+    onRetry: () => activity.refetch(),
+  }
 
   return (
     <>
@@ -55,15 +60,30 @@ export function DashboardPage() {
           icon={Car}
           tone="primary"
           hint={<Link to="/vehicles">Ver vehículos</Link>}
+          isError={vehiclesQuery.isError && !vehiclesQuery.data}
+          onRetry={() => vehiclesQuery.refetch()}
         />
-        <StatTile label="Entradas hoy" value={today?.entries} icon={SignIn} tone="entry" />
-        <StatTile label="Salidas hoy" value={today?.exits} icon={SignOut} tone="exit" />
+        <StatTile
+          label="Entradas hoy"
+          value={today?.entries}
+          icon={SignIn}
+          tone="entry"
+          {...activityErrorProps}
+        />
+        <StatTile
+          label="Salidas hoy"
+          value={today?.exits}
+          icon={SignOut}
+          tone="exit"
+          {...activityErrorProps}
+        />
         <StatTile
           label="Movimientos"
           value={weekTotal}
           icon={ChartBar}
           tone="neutral"
           hint={`Últimos ${ACTIVITY_DAYS} días`}
+          {...activityErrorProps}
         />
       </section>
 
