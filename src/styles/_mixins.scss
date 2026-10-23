@@ -1,0 +1,16 @@
+@use 'sass:map';
+@use 'variables' as *;
+
+/// Mobile-first media query: applies styles from the given breakpoint up.
+/// @param {String} $name - Breakpoint key from $breakpoints (sm, md, lg, xl)
+@mixin media-up($name) {
+  $width: map.get($breakpoints, $name);
+
+  @if not $width {
+    @error "Unknown breakpoint `#{$name}`. Expected one of #{map.keys($breakpoints)}.";
+  }
+
+  @media (min-width: $width) {
+    @content;
+  }
+}

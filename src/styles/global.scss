@@ -1,0 +1,37 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+:root {
+  --color-primary: #{$color-primary};
+  --color-surface: #{$color-surface};
+  --color-background: #{$color-background};
+  --color-text: #{$color-text};
+  --color-text-muted: #{$color-text-muted};
+  --radius-md: #{$radius-md};
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $font-family-base;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-placeholder {
+  padding: $spacing-unit * 6;
+
+  @include media-up(md) {
+    padding: $spacing-unit * 12;
+  }
+
+  p {
+    color: var(--color-text-muted);
+  }
+}

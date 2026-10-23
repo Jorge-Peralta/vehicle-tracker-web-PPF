@@ -1,0 +1,27 @@
+// Design tokens. Exposed as CSS custom properties in global.scss
+// so PrimeReact overrides and components share one source of truth.
+
+$color-primary: #2563eb;
+$color-surface: #ffffff;
+$color-background: #f4f6fa;
+$color-text: #1f2937;
+$color-text-muted: #6b7280;
+
+$font-family-base:
+  'Inter',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  sans-serif;
+
+$spacing-unit: 0.25rem;
+$radius-md: 0.5rem;
+
+// Breakpoints (mobile-first, used by the `media-up` mixin)
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+);
