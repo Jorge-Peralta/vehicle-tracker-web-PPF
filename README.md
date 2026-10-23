@@ -21,6 +21,7 @@ La API REST se encuentra en un repositorio aparte: **vehicle-tracker-api**.
 - TanStack Query 5 para el estado del servidor (carga, errores y caché)
 - React Hook Form + Zod para los formularios
 - Axios, con tipos generados desde la especificación OpenAPI de la API (`openapi-typescript`)
+- Vitest + Testing Library (jsdom)
 - oxlint + Prettier
 
 ## Requisitos
@@ -53,6 +54,8 @@ Las variables `VITE_*` se incluyen en el código que se envía al navegador, por
 | `npm run dev`          | Inicia el servidor de desarrollo                                     |
 | `npm run build`        | Verifica tipos y genera la versión de producción                     |
 | `npm run preview`      | Previsualiza la versión de producción                                |
+| `npm test`             | Ejecuta las pruebas                                                  |
+| `npm run test:watch`   | Ejecuta las pruebas en modo watch                                    |
 | `npm run lint`         | Analiza el código con oxlint                                         |
 | `npm run typecheck`    | Ejecuta el compilador de TypeScript                                  |
 | `npm run format`       | Formatea con Prettier                                                |
@@ -70,6 +73,17 @@ src/
   routes/       definición de rutas y página 404
   styles/       variables, mixins de breakpoints y estilos globales
 ```
+
+### Pruebas
+
+Las pruebas (`*.test.ts(x)` junto al código) cubren la lógica que solo existe en el frontend:
+
+- Las reglas de los formularios de vehículo y de movimiento, que replican las de la API con los mismos mensajes.
+- La lectura y escritura de los filtros de movimientos en la URL (valores inválidos ignorados, vuelta a la página 1 al filtrar).
+- El formulario de vehículo: errores obligatorios, placa en mayúsculas y errores de la API mostrados junto al campo.
+- El formato de placas, kilometraje y fechas en hora de Honduras.
+
+Las reglas de negocio (alternancia, kilometraje, concurrencia) se prueban en la API contra PostgreSQL.
 
 ### Tipos de la API
 
