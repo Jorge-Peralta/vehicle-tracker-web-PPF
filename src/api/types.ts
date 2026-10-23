@@ -14,9 +14,11 @@ export type Movement = Schemas['Movement']
 export type MovementPage = Schemas['MovementPage']
 export type MovementType = Movement['type']
 export type DeleteVehicleResult = Schemas['DeleteVehicleResult']
+export type DailyMovementSummary = Schemas['DailyMovementSummary']
 
 export type VehicleInput = JsonBody<paths['/api/vehicles']['post']['requestBody']>
 export type RegisterMovementInput = JsonBody<paths['/api/movements']['post']['requestBody']>
 
 export type ListVehiclesParams = NonNullable<paths['/api/vehicles']['get']['parameters']['query']>
 export type ListMovementsParams = NonNullable<paths['/api/movements']['get']['parameters']['query']>
+export type DailySummaryParams = paths['/api/movements/daily-summary']['get']['parameters']['query']

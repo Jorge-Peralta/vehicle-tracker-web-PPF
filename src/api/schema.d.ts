@@ -457,6 +457,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/movements/daily-summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Cuenta entradas y salidas por día
+         * @description Un elemento por día del rango, incluidos los días sin movimientos. from y to son obligatorios, días en hora de Honduras (UTC-6), ambos inclusive; máximo 31 días.
+         */
+        get: {
+            parameters: {
+                query: {
+                    from: string;
+                    to: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Conteo diario */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DailyMovementSummary"][];
+                    };
+                };
+                /** @description Datos inválidos */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["Error"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/drivers": {
         parameters: {
             query?: never;
@@ -593,6 +644,15 @@ export interface components {
             total: number;
             page: number;
             pageSize: number;
+        };
+        DailyMovementSummary: {
+            /**
+             * @description Día en hora de Honduras
+             * @example 2026-03-10
+             */
+            date: string;
+            entries: number;
+            exits: number;
         };
         DeleteVehicleResult: {
             /**

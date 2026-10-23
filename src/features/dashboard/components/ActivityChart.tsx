@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { formatDayLabel } from '../../../lib/dates'
-import type { DailyActivity } from '../hooks/use-dashboard'
+import type { DailyMovementSummary } from '../../../api/types'
 import './ActivityChart.scss'
 
 const WIDTH = 640
@@ -41,7 +41,7 @@ function barPath(x: number, y: number, width: number, height: number): string {
 }
 
 type ActivityChartProps = {
-  data: DailyActivity[]
+  data: DailyMovementSummary[]
 }
 
 /** Grouped bars of entries and exits per day, with a hover/focus tooltip and a table for screen readers. */
@@ -92,7 +92,7 @@ export function ActivityChart({ data }: ActivityChartProps) {
             const groupX = PLOT.left + index * groupWidth
             const barsX = groupX + (groupWidth - (BAR_WIDTH * 2 + BAR_GAP)) / 2
             return (
-              <g key={day.day}>
+              <g key={day.date}>
                 {index === activeIndex && (
                   <rect
                     className="activity-chart__highlight"
@@ -126,7 +126,7 @@ export function ActivityChart({ data }: ActivityChartProps) {
                   y={HEIGHT - 8}
                   textAnchor="middle"
                 >
-                  {formatDayLabel(day.day)}
+                  {formatDayLabel(day.date)}
                 </text>
                 {/* Hit target: the whole day column, larger than the bars. */}
                 <rect
@@ -157,7 +157,7 @@ export function ActivityChart({ data }: ActivityChartProps) {
               left: `${Math.min(Math.max(((PLOT.left + (activeIndex + 0.5) * groupWidth) / WIDTH) * 100, 14), 86)}%`,
             }}
           >
-            <strong>{formatDayLabel(active.day)}</strong>
+            <strong>{formatDayLabel(active.date)}</strong>
             {series.map(({ key, label, className }) => (
               <span key={key} className="activity-chart__tooltip-row">
                 <span className={`activity-chart__swatch ${className}`} aria-hidden="true" />
@@ -180,8 +180,8 @@ export function ActivityChart({ data }: ActivityChartProps) {
         </thead>
         <tbody>
           {data.map((day) => (
-            <tr key={day.day}>
-              <th scope="row">{formatDayLabel(day.day)}</th>
+            <tr key={day.date}>
+              <th scope="row">{formatDayLabel(day.date)}</th>
               <td>{day.entries}</td>
               <td>{day.exits}</td>
             </tr>
