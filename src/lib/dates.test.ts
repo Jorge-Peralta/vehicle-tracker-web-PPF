@@ -1,5 +1,35 @@
 import { describe, expect, it } from 'vitest'
-import { formatDateTime, parseDateParam, toDateParam } from './dates'
+import {
+  formatDateTime,
+  formatDayLabel,
+  lastBusinessDays,
+  parseDateParam,
+  toDateParam,
+} from './dates'
+
+describe('lastBusinessDays', () => {
+  it('lists the last N Honduras days, oldest first, ending today', () => {
+    expect(lastBusinessDays(3, new Date('2026-03-10T14:30:00.000Z'))).toEqual([
+      '2026-03-08',
+      '2026-03-09',
+      '2026-03-10',
+    ])
+  })
+
+  it('uses the Honduras day, not the UTC day', () => {
+    // 03:00 UTC on Mar 1 is still Feb 28 in Honduras; crosses the month boundary.
+    expect(lastBusinessDays(2, new Date('2026-03-01T03:00:00.000Z'))).toEqual([
+      '2026-02-27',
+      '2026-02-28',
+    ])
+  })
+})
+
+describe('formatDayLabel', () => {
+  it('shows a short weekday and day of month', () => {
+    expect(formatDayLabel('2026-03-10')).toBe('mar 10')
+  })
+})
 
 describe('formatDateTime', () => {
   it('shows the instant in Honduras time (UTC-6), whatever the machine time zone', () => {

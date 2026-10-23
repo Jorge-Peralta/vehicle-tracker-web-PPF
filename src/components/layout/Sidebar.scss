@@ -6,10 +6,13 @@
   position: fixed;
   inset: 0 auto 0 0;
   z-index: $z-index-sidebar;
+  display: flex;
+  flex-direction: column;
   width: $sidebar-width;
-  padding: $spacing-unit * 4;
-  background-color: var(--color-surface);
-  border-right: 1px solid var(--color-border);
+  padding: $spacing-unit * 5 $spacing-unit * 4;
+  overflow-y: auto;
+  background-color: var(--color-sidebar);
+  color: var(--color-sidebar-text);
   transform: translateX(-100%);
   transition: transform 0.2s ease;
   visibility: hidden;
@@ -35,12 +38,47 @@
   &__brand {
     display: flex;
     align-items: center;
-    gap: $spacing-unit * 2;
-    margin-bottom: $spacing-unit * 6;
-    padding: $spacing-unit * 2;
-    font-size: 1.125rem;
+    gap: $spacing-unit * 3;
+    margin-bottom: $spacing-unit * 8;
+    padding: 0 $spacing-unit * 2;
+    font-size: 1.05rem;
     font-weight: 700;
-    color: var(--color-primary);
+    color: #ffffff;
+
+    small {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-sidebar-text);
+    }
+  }
+
+  &__logo {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgb(37 99 235 / 40%);
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-unit * 6;
+  }
+
+  &__section-title {
+    margin: 0 0 $spacing-unit * 2;
+    padding: 0 $spacing-unit * 3;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-sidebar-muted);
   }
 
   &__list {
@@ -58,23 +96,31 @@
     gap: $spacing-unit * 3;
     padding: $spacing-unit * 2.5 $spacing-unit * 3;
     border-radius: var(--radius-md);
-    color: var(--color-text);
+    color: var(--color-sidebar-text);
+    font-size: 0.925rem;
     text-decoration: none;
-    transition: background-color 0.15s ease;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
 
     &:hover {
-      background-color: var(--color-hover);
+      background-color: var(--color-sidebar-hover);
+      color: #ffffff;
     }
 
     &:focus-visible {
-      outline: 2px solid var(--color-primary);
+      outline: 2px solid #93c5fd;
       outline-offset: 2px;
     }
 
     &--active {
-      background-color: var(--color-primary-surface);
-      color: var(--color-primary-strong);
+      background-color: var(--color-primary);
+      color: #ffffff;
       font-weight: 600;
+
+      &:hover {
+        background-color: var(--color-primary);
+      }
     }
   }
 }

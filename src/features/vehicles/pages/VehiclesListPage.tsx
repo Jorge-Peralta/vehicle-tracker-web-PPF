@@ -1,3 +1,4 @@
+import { Car } from '@primeicons/react/car'
 import { Pencil } from '@primeicons/react/pencil'
 import { Plus } from '@primeicons/react/plus'
 import { Search } from '@primeicons/react/search'
@@ -257,11 +258,21 @@ function VehiclesEmptyState({ isLoading, error, isSearching, onRetry }: Vehicles
   }
 
   if (isSearching) {
-    return <p className="vehicles-empty">No hay vehículos que coincidan con la búsqueda.</p>
+    return (
+      <div className="vehicles-empty">
+        <span className="empty-state__icon">
+          <Search aria-hidden="true" />
+        </span>
+        <p>No hay vehículos que coincidan con la búsqueda.</p>
+      </div>
+    )
   }
 
   return (
     <div className="vehicles-empty">
+      <span className="empty-state__icon">
+        <Car aria-hidden="true" />
+      </span>
       <p>Aún no hay vehículos registrados.</p>
       <Button as={Link} to="/vehicles/new" size="small">
         <Plus aria-hidden="true" />

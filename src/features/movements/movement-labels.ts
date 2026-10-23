@@ -5,6 +5,12 @@ export const movementTypeLabels: Record<MovementType, string> = {
   EXIT: 'Salida',
 }
 
+/** Tag colors; they match the entry/exit colors of the dashboard chart. */
+export const movementTypeSeverity: Record<MovementType, 'info' | 'warn'> = {
+  ENTRY: 'info',
+  EXIT: 'warn',
+}
+
 export const movementTypeOptions = (Object.keys(movementTypeLabels) as MovementType[]).map(
   (type) => ({ value: type, label: movementTypeLabels[type] }),
 )

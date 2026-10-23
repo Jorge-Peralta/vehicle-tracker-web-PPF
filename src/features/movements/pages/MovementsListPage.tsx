@@ -1,4 +1,5 @@
 import { FilterSlash } from '@primeicons/react/filter-slash'
+import { Inbox } from '@primeicons/react/inbox'
 import { Plus } from '@primeicons/react/plus'
 import { Button } from '@primereact/ui/button'
 import { DataTable } from '@primereact/ui/datatable'
@@ -17,7 +18,7 @@ import { useDrivers } from '../../drivers/drivers-api'
 import { useVehicles } from '../../vehicles/hooks/use-vehicles'
 import { PAGE_SIZE_OPTIONS, useMovementFilters } from '../hooks/use-movement-filters'
 import { useMovements } from '../hooks/use-movements'
-import { movementTypeLabels, movementTypeOptions } from '../movement-labels'
+import { movementTypeLabels, movementTypeOptions, movementTypeSeverity } from '../movement-labels'
 import './MovementsListPage.scss'
 
 const COLUMN_COUNT = 5
@@ -143,7 +144,7 @@ export function MovementsListPage() {
                       {formatDateTime(movement.occurredAt)}
                     </DataTable.Cell>
                     <DataTable.Cell data-label="Tipo">
-                      <Tag severity={movement.type === 'ENTRY' ? 'success' : 'warn'}>
+                      <Tag severity={movementTypeSeverity[movement.type]}>
                         {movementTypeLabels[movement.type]}
                       </Tag>
                     </DataTable.Cell>
@@ -233,6 +234,9 @@ function MovementsEmptyState({
   if (hasActiveFilters) {
     return (
       <div className="movements-empty">
+        <span className="empty-state__icon">
+          <FilterSlash aria-hidden="true" />
+        </span>
         <p>No hay movimientos con los filtros seleccionados.</p>
         <Button size="small" variant="outlined" onClick={onClearFilters}>
           Limpiar filtros
@@ -243,6 +247,9 @@ function MovementsEmptyState({
 
   return (
     <div className="movements-empty">
+      <span className="empty-state__icon">
+        <Inbox aria-hidden="true" />
+      </span>
       <p>Aún no hay entradas ni salidas registradas.</p>
       <Button as={Link} to="/movements/new" size="small">
         <Plus aria-hidden="true" />

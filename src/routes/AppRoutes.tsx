@@ -4,6 +4,11 @@ import { AppLayout } from '../components/layout/AppLayout'
 import { NotFoundPage } from './NotFoundPage'
 
 // Each page is loaded on demand, so the first visit only downloads the page it needs.
+const DashboardPage = lazy(() =>
+  import('../features/dashboard/pages/DashboardPage').then((module) => ({
+    default: module.DashboardPage,
+  })),
+)
 const VehiclesListPage = lazy(() =>
   import('../features/vehicles/pages/VehiclesListPage').then((module) => ({
     default: module.VehiclesListPage,
@@ -29,7 +34,8 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route index element={<Navigate to="/movements" replace />} />
+        <Route index element={<DashboardPage />} />
+        <Route path="dashboard" element={<Navigate to="/" replace />} />
         <Route path="vehicles" element={<VehiclesListPage />} />
         <Route path="vehicles/new" element={<VehicleFormPage />} />
         <Route path="vehicles/:id/edit" element={<VehicleFormPage />} />

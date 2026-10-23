@@ -36,6 +36,38 @@ export function parseDateParam(value: string | null | undefined): Date | undefin
   return date.getMonth() === month - 1 ? date : undefined
 }
 
+const businessDayFormatter = new Intl.DateTimeFormat('en-CA', {
+  timeZone: BUSINESS_TIME_ZONE,
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+})
+
+const MS_PER_DAY = 24 * 60 * 60 * 1000
+
+/** The last `count` Honduras calendar days as "YYYY-MM-DD", oldest first and ending today. */
+export function lastBusinessDays(count: number, now: Date = new Date()): string[] {
+  // en-CA formats as YYYY-MM-DD; reading it back as UTC midnight makes day steps exact.
+  const today = Date.parse(businessDayFormatter.format(now))
+  return Array.from({ length: count }, (_, index) =>
+    new Date(today - (count - 1 - index) * MS_PER_DAY).toISOString().slice(0, 10),
+  )
+}
+
+const dayLabelFormatter = new Intl.DateTimeFormat('es-HN', {
+  timeZone: 'UTC',
+  weekday: 'short',
+  day: 'numeric',
+})
+
+/** "2026-03-10" -> "mar 10", a compact label for chart axes. */
+export function formatDayLabel(day: string): string {
+  const parts = dayLabelFormatter.formatToParts(new Date(`${day}T00:00:00Z`))
+  const weekday = parts.find((part) => part.type === 'weekday')?.value.replace('.', '') ?? ''
+  const dayOfMonth = parts.find((part) => part.type === 'day')?.value ?? ''
+  return `${weekday} ${dayOfMonth}`
+}
+
 /** Current time without seconds, the precision of the date-time picker. */
 export function nowToTheMinute(): Date {
   const now = new Date()

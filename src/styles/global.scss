@@ -20,7 +20,17 @@
   --color-success-text: #{$color-success-text};
   --color-warning-surface: #{$color-warning-surface};
   --color-warning-text: #{$color-warning-text};
+  --color-border-strong: #{$color-border-strong};
+  --color-sidebar: #{$color-sidebar};
+  --color-sidebar-hover: #{$color-sidebar-hover};
+  --color-sidebar-text: #{$color-sidebar-text};
+  --color-sidebar-muted: #{$color-sidebar-muted};
+  --color-chart-entry: #{$color-chart-entry};
+  --color-chart-exit: #{$color-chart-exit};
+  --shadow-sm: #{$shadow-sm};
+  --shadow-lg: #{$shadow-lg};
   --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
 }
 
 *,
@@ -37,15 +47,52 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+h1,
+h2,
+h3 {
+  letter-spacing: -0.01em;
+}
+
 // Surface for page content (forms, tables, empty states).
 .card {
   padding: $spacing-unit * 4;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
 
   @include media-up(md) {
     padding: $spacing-unit * 6;
+  }
+}
+
+// Centered message with an icon badge, for empty lists and missing pages.
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-unit * 3;
+  padding-block: $spacing-unit * 10;
+  color: var(--color-text-muted);
+  text-align: center;
+
+  p {
+    margin: 0;
+  }
+
+  &__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: var(--color-primary-surface);
+    color: var(--color-primary);
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
   }
 }
 

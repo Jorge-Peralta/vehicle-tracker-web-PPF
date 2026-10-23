@@ -1,0 +1,98 @@
+@use '../../../styles/variables' as *;
+
+.activity-chart {
+  margin: 0;
+
+  &__legend {
+    display: flex;
+    gap: $spacing-unit * 4;
+    margin: 0 0 $spacing-unit * 3;
+    padding: 0;
+    list-style: none;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      gap: $spacing-unit * 2;
+    }
+  }
+
+  &__swatch {
+    display: inline-block;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 2px;
+  }
+
+  &__plot {
+    position: relative;
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+  }
+
+  &__grid {
+    stroke: var(--color-border);
+    stroke-dasharray: 2 4;
+  }
+
+  &__baseline {
+    stroke: var(--color-border-strong);
+  }
+
+  &__axis {
+    font-size: 11px;
+    fill: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__highlight {
+    fill: var(--color-hover);
+  }
+
+  // Swatches and bars share these fills.
+  &__bar--entry {
+    fill: var(--color-chart-entry);
+    background-color: var(--color-chart-entry);
+  }
+
+  &__bar--exit {
+    fill: var(--color-chart-exit);
+    background-color: var(--color-chart-exit);
+  }
+
+  &__tooltip {
+    position: absolute;
+    top: 0;
+    display: grid;
+    gap: $spacing-unit;
+    min-width: 8.5rem;
+    padding: $spacing-unit * 2 $spacing-unit * 3;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-lg);
+    font-size: 0.8rem;
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+
+  &__tooltip-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-unit * 2;
+    color: var(--color-text-muted);
+
+    b {
+      margin-left: auto;
+      color: var(--color-text);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+}

@@ -5,6 +5,18 @@
 // Each cell shows its column name from its `data-label` attribute, so nothing scrolls sideways.
 // Selectors repeat `tbody > tr > td` to win over PrimeReact's DataTable cell styles.
 .responsive-table {
+  // Wide screens: quiet, small-caps style column headers so the data stands out.
+  @include media-up(md) {
+    > thead > tr > th {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      background-color: var(--color-background);
+    }
+  }
+
   @include media-down(md) {
     // Each cell shows its own column label, so the header row is removed. (Visually-hidden
     // techniques don't work here: clipping is ignored on table-header groups and PrimeReact
