@@ -44,7 +44,34 @@
     }
   }
 
+  // Hidden until focused with the keyboard (Tab on page load).
+  &__skip-link {
+    position: absolute;
+    top: $spacing-unit * 2;
+    left: $spacing-unit * 2;
+    z-index: $z-index-sidebar + 1;
+    padding: $spacing-unit * 2 $spacing-unit * 4;
+    border-radius: var(--radius-md);
+    background-color: var(--color-primary);
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-200%);
+
+    &:focus {
+      transform: none;
+    }
+  }
+
+  &__page-loading {
+    color: var(--color-text-muted);
+  }
+
   &__content {
+    &:focus {
+      outline: none;
+    }
+
     min-width: 0; // lets wide tables scroll inside the column instead of stretching the page
     padding: $spacing-unit * 4;
 

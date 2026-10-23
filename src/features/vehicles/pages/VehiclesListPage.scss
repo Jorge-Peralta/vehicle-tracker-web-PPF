@@ -29,9 +29,12 @@
 }
 
 .vehicles-table {
-  // Narrow screens scroll the table horizontally inside its container.
-  min-width: 36rem;
   width: 100%;
+
+  // Below md the table becomes cards (see styles/_responsive-table.scss).
+  @include media-up(md) {
+    min-width: 36rem;
+  }
 
   &__plate {
     font-weight: 600;

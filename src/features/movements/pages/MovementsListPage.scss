@@ -18,8 +18,12 @@
 }
 
 .movements-table {
-  min-width: 44rem;
   width: 100%;
+
+  // Below md the table becomes cards (see styles/_responsive-table.scss).
+  @include media-up(md) {
+    min-width: 44rem;
+  }
 
   &__date {
     white-space: nowrap;

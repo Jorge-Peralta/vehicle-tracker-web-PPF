@@ -2,14 +2,16 @@
 // so PrimeReact overrides and components share one source of truth.
 // The primary color matches the PrimeReact preset (Aura with blue, src/config/primereact.ts).
 
-$color-primary: #3b82f6; // blue.500
+// Shade 600 (not 500) so primary text meets WCAG AA contrast on white (5.2:1).
+$color-primary: #2563eb; // blue.600
+$color-primary-strong: #1d4ed8; // blue.700, for text on the light primary surface
 $color-primary-surface: #eff6ff; // blue.50
 $color-surface: #ffffff;
 $color-background: #f4f6fa;
 $color-border: #e2e8f0;
 $color-hover: #f1f5f9;
 $color-text: #1f2937;
-$color-text-muted: #64748b;
+$color-text-muted: #475569; // slate.600: 4.5:1+ even on the page background
 $color-info-surface: #eff6ff;
 $color-info-text: #1e40af;
 $color-danger: #dc2626;

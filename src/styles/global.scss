@@ -1,8 +1,10 @@
 @use 'variables' as *;
 @use 'mixins' as *;
+@use 'responsive-table';
 
 :root {
   --color-primary: #{$color-primary};
+  --color-primary-strong: #{$color-primary-strong};
   --color-primary-surface: #{$color-primary-surface};
   --color-surface: #{$color-surface};
   --color-background: #{$color-background};

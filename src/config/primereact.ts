@@ -19,6 +19,18 @@ const AppPreset = definePreset(Aura, {
       900: '{blue.900}',
       950: '{blue.950}',
     },
+    // Aura uses shade 500 for primary buttons and accents; 500 on white is only 3.7:1.
+    // Shade 600 meets the WCAG AA 4.5:1 contrast for text.
+    colorScheme: {
+      light: {
+        primary: {
+          color: '{primary.600}',
+          contrastColor: '#ffffff',
+          hoverColor: '{primary.700}',
+          activeColor: '{primary.800}',
+        },
+      },
+    },
   },
 })
 

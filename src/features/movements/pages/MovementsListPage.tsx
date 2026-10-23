@@ -112,7 +112,10 @@ export function MovementsListPage() {
 
         <DataTable.Root data={movements} dataKey="id">
           <DataTable.TableContainer>
-            <DataTable.Table className="movements-table" aria-busy={movementsQuery.isFetching}>
+            <DataTable.Table
+              className="movements-table responsive-table"
+              aria-busy={movementsQuery.isFetching}
+            >
               <DataTable.THead>
                 <DataTable.THeadRow>
                   <DataTable.THeadCell>
@@ -136,24 +139,29 @@ export function MovementsListPage() {
               <DataTable.TBody>
                 {({ item: movement }: { item: Movement }) => (
                   <DataTable.Row key={movement.id}>
-                    <DataTable.Cell className="movements-table__date">
+                    <DataTable.Cell className="movements-table__date" data-label="Fecha y hora">
                       {formatDateTime(movement.occurredAt)}
                     </DataTable.Cell>
-                    <DataTable.Cell>
+                    <DataTable.Cell data-label="Tipo">
                       <Tag severity={movement.type === 'ENTRY' ? 'success' : 'warn'}>
                         {movementTypeLabels[movement.type]}
                       </Tag>
                     </DataTable.Cell>
-                    <DataTable.Cell>
-                      <span className="movements-table__plate">
-                        {formatPlate(movement.vehicle.plate)}
-                      </span>
-                      <span className="movements-table__muted">
-                        {movement.vehicle.brand} {movement.vehicle.model}
-                      </span>
+                    <DataTable.Cell data-label="Vehículo">
+                      {/* One wrapper so plate and model stay together in the card layout. */}
+                      <div>
+                        <span className="movements-table__plate">
+                          {formatPlate(movement.vehicle.plate)}
+                        </span>
+                        <span className="movements-table__muted">
+                          {movement.vehicle.brand} {movement.vehicle.model}
+                        </span>
+                      </div>
                     </DataTable.Cell>
-                    <DataTable.Cell>{movement.driver.fullName}</DataTable.Cell>
-                    <DataTable.Cell className="movements-table__number">
+                    <DataTable.Cell data-label="Conductor">
+                      {movement.driver.fullName}
+                    </DataTable.Cell>
+                    <DataTable.Cell className="movements-table__number" data-label="Kilometraje">
                       {formatMileage(movement.mileage)}
                     </DataTable.Cell>
                   </DataTable.Row>

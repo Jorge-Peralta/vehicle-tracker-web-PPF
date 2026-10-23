@@ -103,7 +103,10 @@ export function VehiclesListPage() {
 
         <DataTable.Root data={vehicles} dataKey="id">
           <DataTable.TableContainer>
-            <DataTable.Table className="vehicles-table" aria-busy={vehiclesQuery.isFetching}>
+            <DataTable.Table
+              className="vehicles-table responsive-table"
+              aria-busy={vehiclesQuery.isFetching}
+            >
               <DataTable.THead>
                 <DataTable.THeadRow>
                   <DataTable.THeadCell>
@@ -134,14 +137,15 @@ export function VehiclesListPage() {
               <DataTable.TBody>
                 {({ item: vehicle }: { item: Vehicle }) => (
                   <DataTable.Row key={vehicle.id}>
-                    <DataTable.Cell className="vehicles-table__plate">
-                      {formatPlate(vehicle.plate)}
+                    {/* data-label: column name shown in the card layout on small screens */}
+                    <DataTable.Cell data-label="Placa">
+                      <span className="vehicles-table__plate">{formatPlate(vehicle.plate)}</span>
                     </DataTable.Cell>
-                    <DataTable.Cell>{vehicle.brand}</DataTable.Cell>
-                    <DataTable.Cell>{vehicle.model}</DataTable.Cell>
-                    <DataTable.Cell>{vehicle.year ?? '—'}</DataTable.Cell>
+                    <DataTable.Cell data-label="Marca">{vehicle.brand}</DataTable.Cell>
+                    <DataTable.Cell data-label="Modelo">{vehicle.model}</DataTable.Cell>
+                    <DataTable.Cell data-label="Año">{vehicle.year ?? '—'}</DataTable.Cell>
                     {includeInactive && (
-                      <DataTable.Cell>
+                      <DataTable.Cell data-label="Estado">
                         {vehicle.isActive ? (
                           <Tag severity="success">Activo</Tag>
                         ) : (
@@ -149,7 +153,7 @@ export function VehiclesListPage() {
                         )}
                       </DataTable.Cell>
                     )}
-                    <DataTable.Cell className="vehicles-table__actions">
+                    <DataTable.Cell className="vehicles-table__actions responsive-table__actions">
                       {vehicle.isActive && (
                         <div className="vehicles-table__buttons">
                           <Button

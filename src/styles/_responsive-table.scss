@@ -1,0 +1,74 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// Tables with the `responsive-table` class turn into one card per row on small screens.
+// Each cell shows its column name from its `data-label` attribute, so nothing scrolls sideways.
+// Selectors repeat `tbody > tr > td` to win over PrimeReact's DataTable cell styles.
+.responsive-table {
+  @include media-down(md) {
+    // Each cell shows its own column label, so the header row is removed. (Visually-hidden
+    // techniques don't work here: clipping is ignored on table-header groups and PrimeReact
+    // makes the header sticky.)
+    > thead {
+      display: none;
+    }
+
+    &,
+    tbody,
+    tbody > tr,
+    tbody > tr > td {
+      display: block;
+      width: 100%;
+    }
+
+    tbody > tr {
+      margin-bottom: $spacing-unit * 3;
+      padding: $spacing-unit * 2 $spacing-unit * 3;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background-color: var(--color-surface);
+    }
+
+    tbody > tr > td {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: $spacing-unit * 4;
+      padding: $spacing-unit * 1.5 0;
+      border: none;
+      text-align: right;
+    }
+
+    tbody > tr > td[data-label]::before {
+      content: attr(data-label);
+      flex-shrink: 0;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      text-align: left;
+    }
+
+    // Row actions: full width, aligned right, separated from the data.
+    tbody > tr > td.responsive-table__actions {
+      justify-content: flex-end;
+      margin-top: $spacing-unit;
+      padding-top: $spacing-unit * 2;
+      border-top: 1px solid var(--color-border);
+
+      &:empty {
+        display: none;
+      }
+    }
+
+    // Empty/loading state row: no card frame.
+    tbody > tr:has(> td[colspan]) {
+      border: none;
+      background: none;
+    }
+
+    tbody > tr > td[colspan] {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+}

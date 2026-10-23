@@ -2,7 +2,7 @@ import { Bars } from '@primeicons/react/bars'
 import { Car } from '@primeicons/react/car'
 import { Times } from '@primeicons/react/times'
 import { Button } from '@primereact/ui/button'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router'
 import { AppToaster } from '../feedback/AppToaster'
 import { ServerWakeUpNotice } from '../feedback/ServerWakeUpNotice'
@@ -31,6 +31,11 @@ export function AppLayout() {
 
   return (
     <div className="app-layout">
+      {/* First focusable element: lets keyboard users jump past the navigation. */}
+      <a href="#main-content" className="app-layout__skip-link">
+        Saltar al contenido principal
+      </a>
+
       <header className="app-layout__topbar">
         <Button
           variant="text"
@@ -53,9 +58,18 @@ export function AppLayout() {
         <div className="app-layout__backdrop" aria-hidden="true" onClick={closeMenu} />
       )}
 
-      <main className="app-layout__content">
+      <main id="main-content" className="app-layout__content" tabIndex={-1}>
         <ServerWakeUpNotice />
-        <Outlet />
+        {/* Pages are lazy-loaded (see AppRoutes); shown while a page's code downloads. */}
+        <Suspense
+          fallback={
+            <p className="app-layout__page-loading" aria-busy="true">
+              Cargando…
+            </p>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </main>
 
       <AppToaster />
