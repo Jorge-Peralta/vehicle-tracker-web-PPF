@@ -2,7 +2,16 @@
 
 Frontend en React para registrar vehículos y llevar el control de sus entradas y salidas, con filtros por fecha, vehículo y conductor.
 
-La API REST se encuentra en un repositorio aparte: **vehicle-tracker-api-PPF**.
+La API REST se encuentra en un repositorio aparte: **[vehicle-tracker-api-PPF](https://github.com/Jorge-Peralta/vehicle-tracker-api-PPF)**.
+
+## Demo en línea
+
+| Recurso                     | URL                                                                                                    |
+| --------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Aplicación web              | [vehicle-tracker-web-ppf.vercel.app](https://vehicle-tracker-web-ppf.vercel.app)                       |
+| API (documentación Swagger) | [vehicle-tracker-api-ppf.onrender.com/api/docs](https://vehicle-tracker-api-ppf.onrender.com/api/docs) |
+
+La aplicación está desplegada en Vercel y la API en el plan gratuito de Render, que suspende el servidor tras unos minutos sin uso. **La primera carga puede tardar entre 30 y 60 segundos**; mientras tanto la aplicación muestra el aviso "Despertando el servidor…".
 
 ## Requisitos
 
