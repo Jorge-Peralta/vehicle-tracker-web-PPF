@@ -1,0 +1,46 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.table-pagination {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit * 3;
+  margin-top: $spacing-unit * 4;
+
+  @include media-up(md) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__summary {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $spacing-unit * 2;
+  }
+
+  &__page-size {
+    display: flex;
+    align-items: center;
+    gap: $spacing-unit * 2;
+    margin-right: $spacing-unit * 2;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+
+    > :last-child {
+      width: 5.5rem;
+    }
+  }
+
+  &__page {
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+}

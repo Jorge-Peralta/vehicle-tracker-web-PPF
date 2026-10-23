@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { fieldDescriptionId } from './field-ids'
+import { fieldDescriptionId, fieldLabelId } from './field-ids'
 import './FormField.scss'
 
 type FormFieldProps = {
@@ -21,7 +21,7 @@ export function FormField({ inputId, label, required, error, hint, children }: F
 
   return (
     <div className="form-field">
-      <label htmlFor={inputId} className="form-field__label">
+      <label id={fieldLabelId(inputId)} htmlFor={inputId} className="form-field__label">
         {label}
         {required && (
           <span className="form-field__required" aria-hidden="true">

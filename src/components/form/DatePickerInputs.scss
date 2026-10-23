@@ -1,0 +1,11 @@
+@use '../../styles/variables' as *;
+
+// Time steppers centered under the month grid.
+.date-picker-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-unit * 2;
+  padding-top: $spacing-unit * 2;
+  border-top: 1px solid var(--color-border);
+}

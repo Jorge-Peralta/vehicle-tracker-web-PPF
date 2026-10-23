@@ -1,0 +1,25 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.vehicle-status {
+  display: grid;
+  gap: $spacing-unit * 3;
+  margin: 0;
+  padding: $spacing-unit * 3 $spacing-unit * 4;
+  border-radius: var(--radius-md);
+  background-color: var(--color-background);
+
+  @include media-up(sm) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  dt {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  dd {
+    margin: $spacing-unit 0 0;
+    font-weight: 600;
+  }
+}

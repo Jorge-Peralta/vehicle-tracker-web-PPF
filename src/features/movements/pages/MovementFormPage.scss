@@ -1,0 +1,15 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.movement-form {
+  // Status summary spans both columns of the form grid.
+  &__status {
+    @include media-up(md) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__error {
+    margin-top: $spacing-unit * 5;
+  }
+}
