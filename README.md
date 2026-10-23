@@ -2,15 +2,21 @@
 
 Frontend en React para registrar vehículos y llevar el control de sus entradas y salidas, con filtros por fecha, vehículo y conductor.
 
-La API REST se encuentra en un repositorio aparte: **vehicle-tracker-api**.
+La API REST se encuentra en un repositorio aparte: **vehicle-tracker-api-PPF**.
 
-## Funcionalidades
+## Requisitos
 
-- **Vehículos:** listado con búsqueda por marca, modelo o placa; creación, edición y eliminación con confirmación. Un vehículo con movimientos se desactiva en lugar de eliminarse, para conservar su historial.
-- **Registrar movimiento:** al elegir un vehículo se muestra si está dentro o fuera, su último kilometraje y su último movimiento, y se preselecciona el tipo que corresponde (entrada o salida). El conductor se elige de la lista de conductores registrados, con búsqueda.
-- **Entradas y salidas:** listado paginado en el servidor con filtros por rango de fechas, vehículo, conductor y tipo. Los filtros se guardan en la URL, por lo que se mantienen al recargar y se pueden compartir.
-- **Validación:** los formularios aplican las mismas reglas que la API (formato de placa, kilometraje no menor al último, fecha no futura y posterior al último movimiento) y muestran los errores de la API junto al campo correspondiente.
-- Las fechas se muestran en hora de Honduras (UTC-6), la misma zona que usa la API para los filtros por día.
+- Node.js 24 o superior
+- La API en ejecución, local o desplegada (ver vehicle-tracker-api)
+- Una licencia de PrimeUI (la licencia Community es gratuita para personas y proyectos pequeños)
+
+## Instalación y configuración:
+
+```bash
+npm install
+cp .env.example .env   # luego configure VITE_API_URL y VITE_PRIMEREACT_LICENSE
+npm run dev            # http://localhost:5173
+```
 
 ## Tecnologías
 
@@ -24,19 +30,13 @@ La API REST se encuentra en un repositorio aparte: **vehicle-tracker-api**.
 - Vitest + Testing Library (jsdom)
 - oxlint + Prettier
 
-## Requisitos
+## Funcionalidades
 
-- Node.js 24 o superior
-- La API en ejecución, local o desplegada (ver vehicle-tracker-api)
-- Una licencia de PrimeUI (la licencia Community es gratuita para personas y proyectos pequeños)
-
-## Puesta en marcha
-
-```bash
-npm install
-cp .env.example .env   # luego configure VITE_API_URL y VITE_PRIMEREACT_LICENSE
-npm run dev            # http://localhost:5173
-```
+- **Vehículos:** listado con búsqueda por marca, modelo o placa; creación, edición y eliminación con confirmación. Un vehículo con movimientos se desactiva en lugar de eliminarse, para conservar su historial.
+- **Registrar movimiento:** al elegir un vehículo se muestra si está dentro o fuera, su último kilometraje y su último movimiento, y se preselecciona el tipo que corresponde (entrada o salida). El conductor se elige de la lista de conductores registrados, con búsqueda.
+- **Entradas y salidas:** listado paginado en el servidor con filtros por rango de fechas, vehículo, conductor y tipo. Los filtros se guardan en la URL, por lo que se mantienen al recargar y se pueden compartir.
+- **Validación:** los formularios aplican las mismas reglas que la API (formato de placa, kilometraje no menor al último, fecha no futura y posterior al último movimiento) y muestran los errores de la API junto al campo correspondiente.
+- Las fechas se muestran en hora de Honduras (UTC-6), la misma zona que usa la API para los filtros por día.
 
 ## Variables de entorno
 
