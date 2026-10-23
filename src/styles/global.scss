@@ -3,10 +3,15 @@
 
 :root {
   --color-primary: #{$color-primary};
+  --color-primary-surface: #{$color-primary-surface};
   --color-surface: #{$color-surface};
   --color-background: #{$color-background};
+  --color-border: #{$color-border};
+  --color-hover: #{$color-hover};
   --color-text: #{$color-text};
   --color-text-muted: #{$color-text-muted};
+  --color-info-surface: #{$color-info-surface};
+  --color-info-text: #{$color-info-text};
   --radius-md: #{$radius-md};
 }
 
@@ -24,14 +29,23 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.app-placeholder {
-  padding: $spacing-unit * 6;
+// Surface for page content (forms, tables, empty states).
+.card {
+  padding: $spacing-unit * 4;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
 
   @include media-up(md) {
-    padding: $spacing-unit * 12;
+    padding: $spacing-unit * 6;
   }
+}
 
-  p {
-    color: var(--color-text-muted);
-  }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

@@ -1,0 +1,59 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.app-layout {
+  min-height: 100vh;
+
+  @include media-up(lg) {
+    display: grid;
+    grid-template-columns: $sidebar-width 1fr;
+  }
+
+  &__topbar {
+    position: sticky;
+    top: 0;
+    z-index: $z-index-topbar;
+    display: flex;
+    align-items: center;
+    gap: $spacing-unit * 2;
+    height: $topbar-height;
+    padding: 0 $spacing-unit * 2;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+
+    @include media-up(lg) {
+      display: none;
+    }
+  }
+
+  &__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-unit * 2;
+    font-weight: 600;
+  }
+
+  &__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: $z-index-backdrop;
+    background-color: rgb(15 23 42 / 40%);
+
+    @include media-up(lg) {
+      display: none;
+    }
+  }
+
+  &__content {
+    min-width: 0; // lets wide tables scroll inside the column instead of stretching the page
+    padding: $spacing-unit * 4;
+
+    @include media-up(md) {
+      padding: $spacing-unit * 6;
+    }
+
+    @include media-up(xl) {
+      padding: $spacing-unit * 8 $spacing-unit * 10;
+    }
+  }
+}

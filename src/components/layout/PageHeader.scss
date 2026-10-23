@@ -1,0 +1,36 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit * 3;
+  margin-bottom: $spacing-unit * 6;
+
+  @include media-up(md) {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    @include media-up(md) {
+      font-size: 1.75rem;
+    }
+  }
+
+  &__description {
+    margin: $spacing-unit * 1 0 0;
+    color: var(--color-text-muted);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-unit * 2;
+  }
+}

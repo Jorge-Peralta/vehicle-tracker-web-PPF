@@ -1,11 +1,17 @@
 // Design tokens. Exposed as CSS custom properties in global.scss
 // so PrimeReact overrides and components share one source of truth.
+// The primary color matches the PrimeReact preset (Aura with blue, src/config/primereact.ts).
 
-$color-primary: #2563eb;
+$color-primary: #3b82f6; // blue.500
+$color-primary-surface: #eff6ff; // blue.50
 $color-surface: #ffffff;
 $color-background: #f4f6fa;
+$color-border: #e2e8f0;
+$color-hover: #f1f5f9;
 $color-text: #1f2937;
-$color-text-muted: #6b7280;
+$color-text-muted: #64748b;
+$color-info-surface: #eff6ff;
+$color-info-text: #1e40af;
 
 $font-family-base:
   'Inter',
@@ -17,6 +23,14 @@ $font-family-base:
 
 $spacing-unit: 0.25rem;
 $radius-md: 0.5rem;
+
+// Layout
+$sidebar-width: 16rem;
+$topbar-height: 3.5rem;
+
+$z-index-topbar: 900;
+$z-index-backdrop: 950;
+$z-index-sidebar: 1000;
 
 // Breakpoints (mobile-first, used by the `media-up` mixin)
 $breakpoints: (

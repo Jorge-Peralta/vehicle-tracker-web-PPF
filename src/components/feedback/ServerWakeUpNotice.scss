@@ -1,0 +1,30 @@
+@use '../../styles/variables' as *;
+
+.server-wake-up-notice {
+  display: flex;
+  align-items: center;
+  gap: $spacing-unit * 3;
+  margin-bottom: $spacing-unit * 4;
+  padding: $spacing-unit * 3 $spacing-unit * 4;
+  border-radius: var(--radius-md);
+  background-color: var(--color-info-surface);
+  color: var(--color-info-text);
+  font-size: 0.9rem;
+
+  &__icon {
+    flex-shrink: 0;
+    animation: server-wake-up-spin 1s linear infinite;
+  }
+}
+
+@keyframes server-wake-up-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .server-wake-up-notice__icon {
+    animation: none;
+  }
+}
