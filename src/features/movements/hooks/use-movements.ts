@@ -1,6 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { ListMovementsParams, RegisterMovementInput } from '../../../api/types'
-import { driverKeys } from '../../drivers/drivers-api'
 import { vehicleKeys } from '../../vehicles/hooks/use-vehicles'
 import { fetchMovements, registerMovement } from '../api/movements-api'
 
@@ -19,8 +18,8 @@ export function useMovements(params: ListMovementsParams) {
 }
 
 /**
- * A new movement changes the list, the vehicle's status/last mileage, and possibly
- * adds a driver, so all three are refreshed.
+ * A new movement changes the list and the vehicle's status/last mileage, so both are refreshed.
+ * Drivers are not: registering a movement never creates one.
  */
 export function useRegisterMovement() {
   const queryClient = useQueryClient()
@@ -30,7 +29,6 @@ export function useRegisterMovement() {
       Promise.all([
         queryClient.invalidateQueries({ queryKey: movementKeys.all }),
         queryClient.invalidateQueries({ queryKey: vehicleKeys.all }),
-        queryClient.invalidateQueries({ queryKey: driverKeys.all }),
       ]),
   })
 }

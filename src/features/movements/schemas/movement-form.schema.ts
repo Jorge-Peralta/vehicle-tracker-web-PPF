@@ -17,7 +17,7 @@ export function createMovementFormSchema(lastMovement: LastMovement | null) {
     .object({
       vehicleId: z.number('El vehículo es obligatorio').nullable(),
       type: z.enum(['ENTRY', 'EXIT'], 'El tipo debe ser entrada o salida'),
-      // Chosen from the existing drivers; the page sends that driver's name to the API.
+      // Chosen from the existing drivers; only the API seed creates drivers.
       driverId: z.number('El conductor es obligatorio').nullable(),
       occurredAt: z.date('La fecha es obligatoria').nullable(),
       mileage: z

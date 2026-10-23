@@ -15,6 +15,7 @@ import { PageHeader } from '../../../components/layout/PageHeader'
 import { nowToTheMinute } from '../../../lib/dates'
 import { applyApiFieldErrors } from '../../../lib/form-errors'
 import { formatPlate } from '../../../lib/formatters'
+import { toDriverOptions } from '../../drivers/driver-options'
 import { useDrivers } from '../../drivers/drivers-api'
 import { useVehicle, useVehicles } from '../../vehicles/hooks/use-vehicles'
 import { MovementTypeInput } from '../components/MovementTypeInput'
@@ -29,7 +30,7 @@ import {
 } from '../schemas/movement-form.schema'
 import './MovementFormPage.scss'
 
-const FIELD_NAMES = ['vehicleId', 'type', 'occurredAt', 'mileage'] as const
+const FIELD_NAMES = ['vehicleId', 'type', 'driverId', 'occurredAt', 'mileage'] as const
 
 /** `/movements/new`; `?vehicleId=` preselects a vehicle. */
 export function MovementFormPage() {
@@ -48,10 +49,7 @@ export function MovementFormPage() {
   )
 
   const driversQuery = useDrivers()
-  const driverOptions = useMemo(
-    () => (driversQuery.data ?? []).map((driver) => ({ value: driver.id, label: driver.fullName })),
-    [driversQuery.data],
-  )
+  const driverOptions = useMemo(() => toDriverOptions(driversQuery.data ?? []), [driversQuery.data])
 
   // The date and mileage rules depend on the selected vehicle, which is only known after the
   // form exists, so the resolver reads the latest value from a ref.
@@ -116,8 +114,7 @@ export function MovementFormPage() {
       const movement = await registerMovement.mutateAsync({
         vehicleId: values.vehicleId!,
         type: values.type,
-        // The API matches drivers by name, so the listed name reuses that same driver.
-        driverName: driverOptions.find((option) => option.value === values.driverId)!.label,
+        driverId: values.driverId!,
         occurredAt: values.occurredAt!.toISOString(),
         mileage: values.mileage!,
       })

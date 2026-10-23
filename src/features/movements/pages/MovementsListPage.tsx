@@ -14,6 +14,7 @@ import { SelectInput } from '../../../components/form/SelectInput'
 import { PageHeader } from '../../../components/layout/PageHeader'
 import { formatDateTime, parseDateParam, toDateParam } from '../../../lib/dates'
 import { formatMileage, formatPlate } from '../../../lib/formatters'
+import { toDriverOptions } from '../../drivers/driver-options'
 import { useDrivers } from '../../drivers/drivers-api'
 import { useVehicles } from '../../vehicles/hooks/use-vehicles'
 import { PAGE_SIZE_OPTIONS, useMovementFilters } from '../hooks/use-movement-filters'
@@ -40,10 +41,7 @@ export function MovementsListPage() {
   )
 
   const driversQuery = useDrivers()
-  const driverOptions = useMemo(
-    () => (driversQuery.data ?? []).map((driver) => ({ value: driver.id, label: driver.fullName })),
-    [driversQuery.data],
-  )
+  const driverOptions = useMemo(() => toDriverOptions(driversQuery.data ?? []), [driversQuery.data])
 
   return (
     <>

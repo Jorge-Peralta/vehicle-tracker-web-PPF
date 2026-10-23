@@ -1,5 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import { formatMileage, formatPlate } from './formatters'
+import { formatIdentityNumber, formatMileage, formatPlate } from './formatters'
+
+describe('formatIdentityNumber', () => {
+  it('adds the dashes of the Honduran format', () => {
+    expect(formatIdentityNumber('0801199012345')).toBe('0801-1990-12345')
+  })
+
+  it('leaves values that are not a stored identity number unchanged', () => {
+    expect(formatIdentityNumber('0801-1990-12345')).toBe('0801-1990-12345')
+    expect(formatIdentityNumber('123')).toBe('123')
+  })
+})
 
 describe('formatPlate', () => {
   it('adds the space between letters and digits', () => {

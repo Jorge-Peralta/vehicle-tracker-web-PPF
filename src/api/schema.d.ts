@@ -373,7 +373,7 @@ export interface paths {
         put?: never;
         /**
          * Registra una entrada o salida
-         * @description Reglas: los tipos se alternan (el primero puede ser cualquiera), la fecha no puede estar en el futuro y debe ser posterior al último movimiento, y el kilometraje no puede ser menor que el último. El conductor se reutiliza por nombre o se crea.
+         * @description Reglas: los tipos se alternan (el primero puede ser cualquiera), la fecha no puede estar en el futuro y debe ser posterior al último movimiento, y el kilometraje no puede ser menor que el último. El conductor debe existir: los conductores solo se crean con los datos de ejemplo (seed).
          */
         post: {
             parameters: {
@@ -387,7 +387,7 @@ export interface paths {
                     /**
                      * @example {
                      *       "vehicleId": 1,
-                     *       "driverName": "Ana López",
+                     *       "driverId": 1,
                      *       "type": "ENTRY",
                      *       "occurredAt": "2026-03-10T08:30:00-06:00",
                      *       "mileage": 15230
@@ -396,10 +396,10 @@ export interface paths {
                     "application/json": {
                         vehicleId: number;
                         /**
-                         * @description Se reutiliza el conductor con el mismo nombre (sin distinguir mayúsculas ni espacios) o se crea uno nuevo.
-                         * @example Ana López
+                         * @description Id de un conductor existente (ver GET /api/drivers). Este endpoint no crea conductores.
+                         * @example 1
                          */
-                        driverName: string;
+                        driverId: number;
                         /** @enum {string} */
                         type: "ENTRY" | "EXIT";
                         /**
@@ -431,7 +431,7 @@ export interface paths {
                         "application/json": components["schemas"]["Error"];
                     };
                 };
-                /** @description Vehículo no encontrado o desactivado */
+                /** @description Vehículo no encontrado o desactivado, o conductor no encontrado */
                 404: {
                     headers: {
                         [name: string]: unknown;
@@ -515,7 +515,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Lista los conductores */
+        /**
+         * Lista los conductores
+         * @description En orden alfabético. `search` busca por nombre o por Número de Identidad (se ignoran los guiones).
+         */
         get: {
             parameters: {
                 query?: {
@@ -610,6 +613,11 @@ export interface components {
             id: number;
             /** @example Ana López */
             fullName: string;
+            /**
+             * @description Número de Identidad hondureño: 13 dígitos, sin guiones (único)
+             * @example 0801199012345
+             */
+            identityNumber: string;
         };
         Movement: {
             id: number;
