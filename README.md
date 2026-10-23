@@ -7,7 +7,7 @@ La API REST se encuentra en un repositorio aparte: **vehicle-tracker-api**.
 ## Funcionalidades
 
 - **Vehículos:** listado con búsqueda por marca, modelo o placa; creación, edición y eliminación con confirmación. Un vehículo con movimientos se desactiva en lugar de eliminarse, para conservar su historial.
-- **Registrar movimiento:** al elegir un vehículo se muestra si está dentro o fuera, su último kilometraje y su último movimiento, y se preselecciona el tipo que corresponde (entrada o salida). El conductor se escribe libremente con sugerencias de los ya registrados.
+- **Registrar movimiento:** al elegir un vehículo se muestra si está dentro o fuera, su último kilometraje y su último movimiento, y se preselecciona el tipo que corresponde (entrada o salida). El conductor se elige de la lista de conductores registrados, con búsqueda.
 - **Entradas y salidas:** listado paginado en el servidor con filtros por rango de fechas, vehículo, conductor y tipo. Los filtros se guardan en la URL, por lo que se mantienen al recargar y se pueden compartir.
 - **Validación:** los formularios aplican las mismas reglas que la API (formato de placa, kilometraje no menor al último, fecha no futura y posterior al último movimiento) y muestran los errores de la API junto al campo correspondiente.
 - Las fechas se muestran en hora de Honduras (UTC-6), la misma zona que usa la API para los filtros por día.

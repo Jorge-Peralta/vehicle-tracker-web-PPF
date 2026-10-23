@@ -5,8 +5,6 @@ import { formatMileage } from '../../../lib/formatters'
 /** Allowed difference between the browser clock and "now" when checking future dates. */
 const CLOCK_SKEW_MS = 60 * 1000
 
-const DRIVER_NAME_PATTERN = /^\p{L}[\p{L}\s.'-]*$/u
-
 /** The selected vehicle's last movement, used for the date and mileage rules. */
 export type LastMovement = { occurredAt: Date; mileage: number }
 
@@ -19,20 +17,8 @@ export function createMovementFormSchema(lastMovement: LastMovement | null) {
     .object({
       vehicleId: z.number('El vehículo es obligatorio').nullable(),
       type: z.enum(['ENTRY', 'EXIT'], 'El tipo debe ser entrada o salida'),
-      driverName: z
-        .string()
-        .transform((name) => name.trim().replace(/\s+/g, ' '))
-        .pipe(
-          z
-            .string()
-            .min(1, 'El nombre del conductor es obligatorio')
-            .min(2, 'El nombre del conductor debe tener al menos 2 caracteres')
-            .max(100, 'El nombre del conductor debe tener como máximo 100 caracteres')
-            .regex(
-              DRIVER_NAME_PATTERN,
-              "El nombre del conductor solo puede contener letras, espacios y los caracteres . ' -",
-            ),
-        ),
+      // Chosen from the existing drivers; the page sends that driver's name to the API.
+      driverId: z.number('El conductor es obligatorio').nullable(),
       occurredAt: z.date('La fecha es obligatoria').nullable(),
       mileage: z
         .number('El kilometraje es obligatorio')
@@ -47,6 +33,14 @@ export function createMovementFormSchema(lastMovement: LastMovement | null) {
           code: 'custom',
           path: ['vehicleId'],
           message: 'El vehículo es obligatorio',
+        })
+      }
+
+      if (values.driverId === null) {
+        context.addIssue({
+          code: 'custom',
+          path: ['driverId'],
+          message: 'El conductor es obligatorio',
         })
       }
 

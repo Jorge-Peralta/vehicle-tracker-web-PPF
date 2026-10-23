@@ -11,7 +11,7 @@ const hoursAgo = (hours: number) => new Date(Date.now() - hours * HOUR_IN_MS)
 const validMovement: MovementFormInput = {
   vehicleId: 1,
   type: 'ENTRY',
-  driverName: 'Ana López',
+  driverId: 7,
   occurredAt: hoursAgo(1),
   mileage: 1500,
 }
@@ -30,27 +30,20 @@ function errorsFor(values: Partial<MovementFormInput>, lastMovement: LastMovemen
 }
 
 describe('createMovementFormSchema', () => {
-  it('accepts a valid movement and cleans up the driver name', () => {
-    const result = validate({ driverName: '  Ana   López ' })
-    expect(result.success && result.data.driverName).toBe('Ana López')
+  it('accepts a valid movement with a selected driver', () => {
+    const result = validate({})
+    expect(result.success && result.data.driverId).toBe(7)
   })
 
   it('requires vehicle, driver, date, and mileage', () => {
-    expect(errorsFor({ vehicleId: null, driverName: '', occurredAt: null, mileage: null })).toEqual(
+    expect(errorsFor({ vehicleId: null, driverId: null, occurredAt: null, mileage: null })).toEqual(
       {
         vehicleId: 'El vehículo es obligatorio',
-        driverName: 'El nombre del conductor es obligatorio',
+        driverId: 'El conductor es obligatorio',
         occurredAt: 'La fecha es obligatoria',
         mileage: 'El kilometraje es obligatorio',
       },
     )
-  })
-
-  it('rejects driver names with digits or symbols', () => {
-    expect(errorsFor({ driverName: 'Ana 2' })).toEqual({
-      driverName:
-        "El nombre del conductor solo puede contener letras, espacios y los caracteres . ' -",
-    })
   })
 
   it('rejects dates in the future', () => {

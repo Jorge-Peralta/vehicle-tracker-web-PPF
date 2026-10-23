@@ -15,8 +15,8 @@ import { PageHeader } from '../../../components/layout/PageHeader'
 import { nowToTheMinute } from '../../../lib/dates'
 import { applyApiFieldErrors } from '../../../lib/form-errors'
 import { formatPlate } from '../../../lib/formatters'
+import { useDrivers } from '../../drivers/drivers-api'
 import { useVehicle, useVehicles } from '../../vehicles/hooks/use-vehicles'
-import { DriverNameInput } from '../components/DriverNameInput'
 import { MovementTypeInput } from '../components/MovementTypeInput'
 import { VehicleStatusSummary } from '../components/VehicleStatusSummary'
 import { useRegisterMovement } from '../hooks/use-movements'
@@ -29,7 +29,7 @@ import {
 } from '../schemas/movement-form.schema'
 import './MovementFormPage.scss'
 
-const FIELD_NAMES = ['vehicleId', 'type', 'driverName', 'occurredAt', 'mileage'] as const
+const FIELD_NAMES = ['vehicleId', 'type', 'occurredAt', 'mileage'] as const
 
 /** `/movements/new`; `?vehicleId=` preselects a vehicle. */
 export function MovementFormPage() {
@@ -45,6 +45,12 @@ export function MovementFormPage() {
         label: `${formatPlate(vehicle.plate)} · ${vehicle.brand} ${vehicle.model}`,
       })),
     [vehiclesQuery.data],
+  )
+
+  const driversQuery = useDrivers()
+  const driverOptions = useMemo(
+    () => (driversQuery.data ?? []).map((driver) => ({ value: driver.id, label: driver.fullName })),
+    [driversQuery.data],
   )
 
   // The date and mileage rules depend on the selected vehicle, which is only known after the
@@ -68,7 +74,7 @@ export function MovementFormPage() {
     defaultValues: {
       vehicleId: preselectedVehicleId,
       type: 'ENTRY',
-      driverName: '',
+      driverId: null,
       occurredAt: nowToTheMinute(),
       mileage: null,
     },
@@ -110,7 +116,8 @@ export function MovementFormPage() {
       const movement = await registerMovement.mutateAsync({
         vehicleId: values.vehicleId!,
         type: values.type,
-        driverName: values.driverName,
+        // The API matches drivers by name, so the listed name reuses that same driver.
+        driverName: driverOptions.find((option) => option.value === values.driverId)!.label,
         occurredAt: values.occurredAt!.toISOString(),
         mileage: values.mileage!,
       })
@@ -193,21 +200,25 @@ export function MovementFormPage() {
           )}
 
           <Controller
-            name="driverName"
+            name="driverId"
             control={control}
             render={({ field, fieldState }) => (
               <FormField
-                inputId="driverName"
+                inputId="driverId"
                 label="Conductor"
                 required
                 error={fieldState.error?.message}
-                hint="Escriba el nombre o elija uno existente"
               >
-                <DriverNameInput
-                  inputId="driverName"
+                <SelectInput
+                  inputId="driverId"
+                  options={driverOptions}
                   value={field.value}
                   onChange={field.onChange}
-                  onBlur={field.onBlur}
+                  placeholder={
+                    driversQuery.isPending ? 'Cargando conductores…' : 'Seleccione un conductor'
+                  }
+                  emptyMessage="No hay conductores registrados"
+                  searchable
                   invalid={fieldState.invalid}
                 />
               </FormField>
