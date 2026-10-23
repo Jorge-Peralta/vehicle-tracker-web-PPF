@@ -1,0 +1,22 @@
+@use '../../styles/variables' as *;
+
+.confirm-dialog {
+  width: min(28rem, calc(100vw - 2rem));
+
+  &__body {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-unit * 3;
+
+    p {
+      margin: 0 0 $spacing-unit * 2;
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-warning);
+  }
+}

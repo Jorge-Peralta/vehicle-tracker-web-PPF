@@ -1,0 +1,67 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.vehicles-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit * 3;
+  margin-bottom: $spacing-unit * 4;
+
+  @include media-up(md) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__search {
+    width: 100%;
+
+    @include media-up(md) {
+      max-width: 24rem;
+    }
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    gap: $spacing-unit * 2;
+  }
+}
+
+.vehicles-table {
+  // Narrow screens scroll the table horizontally inside its container.
+  min-width: 36rem;
+  width: 100%;
+
+  &__plate {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  &__actions {
+    width: 1%;
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  &__buttons {
+    display: inline-flex;
+    gap: $spacing-unit;
+  }
+}
+
+.vehicles-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-unit * 3;
+  margin: 0;
+  padding: $spacing-unit * 8 0;
+  color: var(--color-text-muted);
+  text-align: center;
+
+  p {
+    margin: 0;
+  }
+}

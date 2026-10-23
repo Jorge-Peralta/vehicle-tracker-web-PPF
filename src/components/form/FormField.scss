@@ -1,0 +1,43 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit * 1.5;
+
+  &__label {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  &__required {
+    color: var(--color-danger);
+  }
+
+  &__error {
+    color: var(--color-danger);
+  }
+
+  &__hint {
+    color: var(--color-text-muted);
+  }
+}
+
+// Grid of fields: one column on phones, two from `md` up.
+.form-grid {
+  display: grid;
+  gap: $spacing-unit * 5;
+
+  @include media-up(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: $spacing-unit * 2;
+  margin-top: $spacing-unit * 6;
+}
